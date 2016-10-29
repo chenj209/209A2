@@ -2,12 +2,11 @@
 #include<stdlib.h>
 #include "questions.h"
 
-int main() {
+int main(int argc, char const *argv[]) {
 	FILE *input;
 	Interests *list;
-	int index = 0;
 
-	input = fopen("./test.txt", "r");
+	input = fopen(argv[1], "r");
 	list = lineReader(input);
 
 	while(list != NULL) {
