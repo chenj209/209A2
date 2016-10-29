@@ -1,7 +1,10 @@
-cc = gcc
+CC = gcc
 CFLAGS = -Wall -std=c99
-all: questions
+
+all: questions 
+
 questions:
-	$(cc) $(CFLAGS) questions.c test1.c -o test1
-clean:
-	rm test1
+	$(CC) $(CFLAGS) questions.c test1.c -o test1
+    
+clean:  
+	rm test1 

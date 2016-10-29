@@ -1,37 +1,64 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include"questions.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "questions.h"
 
-//typedef struct interests {
-//	char *topic;
-//	struct interests *next;
-//} Interests;
+Node * get_list_from_file (char *input_file_name) {
+	Node * head = NULL;
 
-Interests *lineReader(FILE *input) {
-	Interests *head = NULL;
-	int start = 0;
-	char line[30];
-	Interests *cur;
+	FILE *input_file;
+	input_file = fopen(input_file_name, "r");
+    //read lines and add to the list
+	if (input_file != NULL) {
+		char line[MAX_LINE];
+		Node *cur;
 
-	while(fgets(line, 29, input) != NULL) {
+		head = malloc(sizeof(Node));
+		fgets(line, MAX_LINE - 1, input_file);
 		line[strcspn(line, "\r\n")] = '\0';
+		head->str = malloc(MAX_LINE * sizeof(char));
+		strcpy(head->str, line);
+		head->next = NULL;
+		printf("%s\n", head->str);
+		
+		cur = head;
 
-		if(!start) { //create the head of the list before start.
-			head = malloc(sizeof(Interests));
-			head->topic = malloc(30 * sizeof(char));
-			head->next = NULL;
-			strcpy(head->topic, line);
-			cur = head;
-			start = 1;
-		} else { //extent the list will list exists.
-			cur->next = malloc(sizeof(Interests));
+	    while(fgets(line, MAX_LINE - 1, input_file) != NULL) {
+
+			line[strcspn(line, "\r\n")] = '\0';
+			cur->next = malloc(sizeof(Node));
 			cur = cur->next;
-			cur->topic = malloc(30 * sizeof(char));
+			cur->str = malloc(MAX_LINE * sizeof(char));
 			cur->next = NULL;
-			strcpy(cur->topic, line);
+			strcpy(cur->str, line);
+	
 		}
 	}
 
 	return head;
+}
+
+void print_list (Node *head) {
+	
+	Node *cur;
+	cur = head;
+	while (cur != NULL) {
+		printf("%s\n", cur->str);
+		cur = cur->next;
+	}
+}
+
+void free_list (Node *head) {
+
+	Node *cur;
+	Node *temp;
+	cur = head->next;
+	free(head->str);
+	free(head);
+	while (cur != NULL) {
+		temp = cur->next;
+		free(cur->str);
+		free(cur);
+		cur = temp;
+	}
 }

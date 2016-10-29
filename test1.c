@@ -1,18 +1,25 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
 #include "questions.h"
 
-int main(int argc, char const *argv[]) {
-	FILE *input;
-	Interests *list;
-
-	input = fopen(argv[1], "r");
-	list = lineReader(input);
-
-	while(list != NULL) {
-		printf("%s\n", list->topic);
-		list = list->next;
-	}
-
-	return 0;
+int main (int argc, char ** argv) {
+    Node * interests;
+    
+    
+    if (argc < 2) {
+        printf ("To run the program ./test1 <name of input file>\n");
+        return 1;
+    }
+    
+    interests = get_list_from_file(argv[1]);
+    
+    if (interests == NULL) {
+        printf ("The list is empty\n");
+        return 1;
+    }
+    
+    print_list (interests);
+	
+	free_list (interests);
+    
+    return 0;
 }
