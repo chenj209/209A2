@@ -19,7 +19,6 @@ Node * get_list_from_file (char *input_file_name) {
 		head->str = malloc(MAX_LINE * sizeof(char));
 		strcpy(head->str, line);
 		head->next = NULL;
-		printf("%s\n", head->str);
 		
 		cur = head;
 
@@ -34,7 +33,7 @@ Node * get_list_from_file (char *input_file_name) {
 	
 		}
 	}
-
+	fclose(input_file);
 	return head;
 }
 
