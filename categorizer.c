@@ -70,6 +70,7 @@ int main (int argc, char **argv) {
 		Node *friends = search_user(root, name);
 		if(friends != NULL) {
 			print_users(friends);
+			printf("What is your name?\n");
 			continue;
 		}
 

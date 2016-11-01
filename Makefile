@@ -1,18 +1,24 @@
+HDIR =../headers
 CC = gcc
-CFLAGS = -Wall -std=c99
+CFLAGS = -Wall -g -std=c99
+
+ODIR =obj
+
+_DEPS = questions.h qtree.h
+DEPS = $(patsubst %,$(HDIR)/%,$(_DEPS))
+
+_OBJ = questions.o qtree.o categorizer.o
+OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 all: categorizer
-categorizer:
-	$(CC) $(CFLAGS) questions.c qtree.c categorizer.c -o categorizer
 
-questions:
-	$(CC) $(CFLAGS) questions.c qtree.c test2.c -o test2
+$(ODIR)/%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-leak-check:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./categorizer test.txt
+categorizer: $(OBJ)
+	$(CC) $^ $(CFLAGS)  -o $@
 
-questions1:
-	$(CC) $(CFLAGS) questions.c qtree.c test1.c -o test1
+.PHONY: clean
     
 clean:  
-	rm test2 
+	rm -f $(ODIR)/*.o categorizer
