@@ -34,7 +34,7 @@ int main (int argc, char ** argv) {
         q_counter = q_counter->next;
         q_len++;
     }
-
+	
     if (q_len != ans_len) 
         printf("\n\nAnswer length does not equal question length.\n\n");
     else {

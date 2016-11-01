@@ -82,21 +82,22 @@ Node *search_user(QNode *parent, char *username) {
 		friends = parent->children[0].fchild;
 		Node *current = friends;
 		while (current != NULL) {
-			if (!strcmp(current->str, username)) return friends;
+			if (strcmp(current->str, username) == 0) return friends;
 			current = current->next;
 		}
 		friends = parent->children[1].fchild;
 		current = friends;
 		while (current != NULL) {
-			if (!strcmp(current->str, username)) return friends;
+			if (strcmp(current->str, username) == 0) return friends;
 			current = current->next;
 		}
-		return friends;
+
 	} else {
 		friends = search_user(parent->children[0].qchild, username);
 		if (friends != NULL) return friends;
 		else return search_user(parent->children[1].qchild, username);
 	}
+	return NULL;
 }
 
 void free_qtree (QNode *parent) {
