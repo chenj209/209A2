@@ -1,16 +1,19 @@
-HDIR =../headers
 CC = gcc
 CFLAGS = -Wall -g -std=c99
 
-ODIR =obj
+ODIR =./obj
 
-_DEPS = questions.h qtree.h
-DEPS = $(patsubst %,$(HDIR)/%,$(_DEPS))
+DEPS = questions.h qtree.h
 
 _OBJ = questions.o qtree.o categorizer.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-all: categorizer
+all: directories categorizer 
+
+directories: obj
+
+obj:
+	mkdir obj
 
 $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
